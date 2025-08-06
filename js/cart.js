@@ -1,32 +1,38 @@
-const cartItemsDiv = document.getElementById('cart-items');
-const cartTotalEl = document.getElementById('cart-total');
+function displayCart() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartItems = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
 
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-function renderCart() {
-    cartItemsDiv.innerHTML = '';
+    cartItems.innerHTML = "";
     let total = 0;
 
     cart.forEach(item => {
-        const div = document.createElement('div');
-        div.classList.add('product');
+        total += item.price * item.quantity;
+        const div = document.createElement("div");
+        div.classList.add("cart-item");
         div.innerHTML = `
-            <p>${item.name} - ${item.quantity} x ${item.price}</p>
+            <img src="${item.image}" alt="${item.name}">
+            <div>
+                <h3>${item.name}</h3>
+                <p>${item.price.toLocaleString()}đ x ${item.quantity}</p>
+            </div>
+            <button onclick="removeItem(${item.id})">Xóa</button>
         `;
-        cartItemsDiv.appendChild(div);
-
-        let giaSo = parseInt(item.price.replace(/\D/g, ''));
-        total += giaSo * item.quantity;
+        cartItems.appendChild(div);
     });
 
-    cartTotalEl.innerText = `Tổng tiền: ${total.toLocaleString()}đ`;
+    cartTotal.innerText = "Tổng: " + total.toLocaleString() + "đ";
 }
 
-function clearCart() {
-    localStorage.removeItem('cart');
-    cart = [];
-    renderCart();
+function removeItem(id) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart = cart.filter(item => item.id !== id);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCart();
 }
 
-renderCart();
+function checkout() {
+    window.location.href = "checkout.html";
+}
 
+displayCart();

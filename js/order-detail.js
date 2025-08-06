@@ -1,23 +1,25 @@
-const orderDetailDiv = document.getElementById('order-detail');
-const params = new URLSearchParams(window.location.search);
-const id = parseInt(params.get('id'));
+function displayOrderDetail() {
+    const orderId = localStorage.getItem("orderDetailId");
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+    const order = orders.find(o => o.id == orderId);
 
-const orders = JSON.parse(localStorage.getItem('orders')) || [];
-const order = orders.find(o => o.id === id);
+    const container = document.getElementById("order-detail");
 
-if (!order) {
-    orderDetailDiv.innerHTML = '<p>Đơn hàng không tồn tại!</p>';
-} else {
-    orderDetailDiv.innerHTML = `
-        <h2>Đơn hàng #${order.id}</h2>
-        <p><strong>Khách hàng:</strong> ${order.name}</p>
-        <p><strong>Địa chỉ:</strong> ${order.address}</p>
-        <p><strong>Điện thoại:</strong> ${order.phone}</p>
-        <p><strong>Ngày đặt:</strong> ${order.date}</p>
-        <h3>Sản phẩm:</h3>
+    if (!order) {
+        container.innerHTML = "<p>Không tìm thấy đơn hàng.</p>";
+        return;
+    }
+
+    container.innerHTML = `
+        <h3>Đơn hàng #${order.id}</h3>
+        <p>Khách hàng: ${order.name}</p>
+        <p>Địa chỉ: ${order.address}</p>
+        <p>Ngày đặt: ${order.date}</p>
+        <h4>Sản phẩm:</h4>
         <ul>
-            ${order.items.map(item => `<li>${item.name} - ${item.quantity} x ${item.price}</li>`).join('')}
+            ${order.items.map(item => `<li>${item.name} - ${item.quantity} x ${item.price.toLocaleString()}đ</li>`).join("")}
         </ul>
-        <p><strong>Tổng tiền:</strong> ${order.total.toLocaleString()}đ</p>
     `;
 }
+
+displayOrderDetail();

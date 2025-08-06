@@ -1,40 +1,28 @@
-const ordersListDiv = document.getElementById('orders-list');
-let orders = JSON.parse(localStorage.getItem('orders')) || [];
+function displayOrders() {
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+    const orderList = document.getElementById("order-list");
 
-function renderOrders() {
     if (orders.length === 0) {
-        ordersListDiv.innerHTML = '<p>Chưa có đơn hàng nào.</p>';
+        orderList.innerHTML = "<p>Chưa có đơn hàng nào.</p>";
         return;
     }
 
-    ordersListDiv.innerHTML = '';
-
     orders.forEach(order => {
-        const div = document.createElement('div');
-        div.classList.add('order');
-
+        const div = document.createElement("div");
+        div.classList.add("order-item");
         div.innerHTML = `
             <h3>Đơn hàng #${order.id}</h3>
-            <p><strong>Ngày đặt:</strong> ${order.date}</p>
-            <p><strong>Tổng tiền:</strong> ${order.total.toLocaleString()}đ</p>
+            <p>${order.date}</p>
+            <p>${order.items.length} sản phẩm</p>
             <button onclick="viewDetail(${order.id})">Xem chi tiết</button>
-            <button onclick="deleteOrder(${order.id})">Xóa</button>
         `;
-
-        ordersListDiv.appendChild(div);
+        orderList.appendChild(div);
     });
 }
 
 function viewDetail(id) {
-    window.location.href = `order-detail.html?id=${id}`;
+    localStorage.setItem("orderDetailId", id);
+    window.location.href = "order-detail.html";
 }
 
-function deleteOrder(id) {
-    if (confirm('Bạn có chắc muốn xóa đơn hàng này?')) {
-        orders = orders.filter(o => o.id !== id);
-        localStorage.setItem('orders', JSON.stringify(orders));
-        renderOrders();
-    }
-}
-
-renderOrders();
+displayOrders();

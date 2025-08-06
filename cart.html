@@ -9,23 +9,16 @@
 <body>
 <header>
     <h1>Giỏ hàng</h1>
-    <nav>
+    <div class="nav-links">
         <a href="index.html">Trang chủ</a>
-        <a href="orders.html">Lịch sử đơn hàng</a>
-    </nav>
+        <a href="orders.html">Đơn hàng</a>
+    </div>
 </header>
 
-<main>
-    <div id="cart-items"></div>
-    <h3 id="cart-total">Tổng tiền: 0đ</h3>
-    <button onclick="clearCart()">Xóa giỏ hàng</button>
-    <a href="checkout.html"><button>Thanh toán</button></a>
-</main>
+<div class="cart-items" id="cart-items"></div>
+<div class="cart-total" id="cart-total"></div>
+<button onclick="checkout()">Thanh toán</button>
 
 <script src="js/cart.js"></script>
 </body>
 </html>
-
-
-
-

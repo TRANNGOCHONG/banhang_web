@@ -9,28 +9,21 @@
 <body>
 <header>
     <h1>Thanh toán</h1>
-    <nav>
+    <div class="nav-links">
+        <a href="index.html">Trang chủ</a>
         <a href="cart.html">Giỏ hàng</a>
-    </nav>
+    </div>
 </header>
 
-<main>
-    <form id="checkout-form">
-        <label>Họ và tên:</label>
-        <input type="text" id="name" required>
-        <label>Địa chỉ:</label>
-        <input type="text" id="address" required>
-        <label>Số điện thoại:</label>
-        <input type="text" id="phone" required>
-
-        <h3>Danh sách sản phẩm</h3>
-        <div id="order-items"></div>
-        <h3 id="order-total">Tổng tiền: 0đ</h3>
-
-        <button type="submit">Đặt hàng</button>
-    </form>
-</main>
+<div class="checkout-form">
+    <label for="name">Tên:</label>
+    <input type="text" id="name">
+    <label for="address">Địa chỉ:</label>
+    <input type="text" id="address">
+    <button onclick="placeOrder()">Đặt hàng</button>
+</div>
 
 <script src="js/checkout.js"></script>
 </body>
 </html>
+
